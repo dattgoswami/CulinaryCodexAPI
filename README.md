@@ -1,6 +1,6 @@
-# Liquidation Monitor
+# Simple API using Node and Express
 
-The task of this assignment is to build a json parser that gets the extensions and number of unique filenames with those extensions.
+The task of this assessment is to build a simple API using Node and Express.
 
 ## Getting Started
 
