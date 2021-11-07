@@ -5,46 +5,34 @@ import {
   getRecipeDetails,
   addRecipe,
   putRecipe
-} from '../../utilities/process_data';
+} from '../../models/process_data';
 
 const recipes = express.Router();
 
 recipes.get('/', async (req: express.Request, res: express.Response) => {
   const recipesList = getRecipes();
   console.log(recipesList);
-  res.status(200);
-  res.send(recipesList);
+  res.status(recipesList['status']);
+  res.send(recipesList['body']);
 });
 recipes.get(
   '/details/:recipeName',
   async (req: express.Request, res: express.Response) => {
     const recipe = req.params.recipeName;
     const recipeDetails = getRecipeDetails(recipe);
-    res.status(200);
-    res.send(recipeDetails);
+    res.status(recipeDetails['status']);
+    res.send(recipeDetails['body']);
   }
 );
 recipes.post('/', async (req: express.Request, res: express.Response) => {
   const response = addRecipe(req);
-  if (response === 400) {
-    const errorMessage = {
-      error: 'Recipe already exists'
-    };
-    res.send(errorMessage);
-  } else {
-    res.status(response).send();
-  }
+  res.status(response['status']);
+  res.send(response['body']);
 });
 recipes.put('/', async (req: express.Request, res: express.Response) => {
   const response = putRecipe(req);
-  if (response === 404) {
-    const errorMessage = {
-      error: 'Recipe does not exists'
-    };
-    res.send(errorMessage);
-  } else {
-    res.status(response).send();
-  }
+  res.status(response['status']);
+  res.send(response['body']);
 });
 
 export default recipes;
